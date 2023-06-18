@@ -1,2 +1,3 @@
 # SpringMvc-BookApplication
-Developed a java spring mvc based book application.
+Developed a web based Book Application.
+The Application is developed in java spring mvc.
