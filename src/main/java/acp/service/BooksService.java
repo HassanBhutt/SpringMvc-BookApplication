@@ -15,7 +15,7 @@ public class BooksService {
 	@Autowired
 	private BooksDao booksDao;
 
-	public String insertBook(Book books) {
+	public boolean insertBook(Book books) {
 		return booksDao.insertBook(books);
 	}
 
@@ -27,7 +27,7 @@ public class BooksService {
 		return booksDao.getbooks();
 	}
 
-	public String deleteBook(double id) {
+	public boolean deleteBook(double id) {
 		return booksDao.deleteBook(id);
 	}
 
