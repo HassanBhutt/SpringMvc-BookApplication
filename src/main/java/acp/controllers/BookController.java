@@ -51,16 +51,9 @@ public class BookController {
 		AnnotationConfigApplicationContext xtr = new AnnotationConfigApplicationContext(Configurations.class);
 
 		BooksService es = xtr.getBean("MyBooksService", BooksService.class);
-
-		String result = es.insertBook(book);
-		if (result.equals("bookexist")) {
-			xtr.close();
-			return "redirect:/BookError";
-
-		} else {
-			xtr.close();
-			return "redirect:/";
-		}
+		boolean result = es.insertBook(book);
+		xtr.close();
+		return result ? "redirect:/BookError" : "redirect:/";
 
 	}
 
@@ -69,15 +62,9 @@ public class BookController {
 		AnnotationConfigApplicationContext xtr = new AnnotationConfigApplicationContext(Configurations.class);
 
 		BooksService es = xtr.getBean("MyBooksService", BooksService.class);
-		String result = es.deleteBook(id);
-
-		if (result.equals("IdNotFound")) {
-			xtr.close();
-			return "redirect:/BookIdError";
-		} else {
-			xtr.close();
-			return "redirect:/";
-		}
+		boolean result = es.deleteBook(id);
+		xtr.close();
+		return result ? "redirect:/BookIdError" : "redirect:/";
 
 	}
 
@@ -107,3 +94,4 @@ public class BookController {
 	}
 
 }
+
