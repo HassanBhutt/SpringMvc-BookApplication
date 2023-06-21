@@ -16,31 +16,31 @@ public class BooksDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	public String insertBook(Book books) {
-		String checkQuery = "select count(*) from books where title = ?";
+	public boolean insertBook(Book books) {
+		String checkQuery = "select exists (select * from books WHERE title = ?) as is_valid";
 		int count = jdbcTemplate.queryForObject(checkQuery, Integer.class, books.getTitle());
 
 		if (count > 0) {
-			System.out.println("Book title already added");
-			return "bookexist";
+			System.out.println("Book title already added here");
+			return count > 0;
 		} else {
 			String insertSQL = "insert into books" + "(title,author,category_id) " + "values(?,?,?)";
 			int result = jdbcTemplate.update(insertSQL, books.getTitle(), books.getAuthor(), books.getCatId());
 			System.out.println("Number of records inserted: " + result);
-			return "";
+			return false;
 		}
 	}
 
-	public String deleteBook(double id) {
+	public boolean deleteBook(double id) {
 
 		String deleteQuery = "delete from books where id = ? ";
 		int result = jdbcTemplate.update(deleteQuery, id);
 		if (result > 0) {
 			System.out.println("Numbers of records deleted are " + result);
-			return "";
+			return false;
 		} else {
 			System.out.println("Numbers of records deleted are " + result);
-			return "IdNotFound";
+			return true;
 		}
 
 	}
@@ -82,3 +82,4 @@ public class BooksDao {
 	}
 
 }
+
